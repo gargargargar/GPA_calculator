@@ -145,7 +145,7 @@ if __name__ == "__main__":
 
 	#Parsing relevant parameters
 	parser = argparse.ArgumentParser()
-	parser.add_argument("--filename", type = str, default = "grade_testfile.csv")
+	parser.add_argument("--filename", type = str, default = b)
 	parser.add_argument("--boost_filename", type = str, default = "boost_testfile.csv")
 	parser.add_argument("--maximum", type = float, default = 4.000)
 	parser.add_argument("--decimal", type = int, default = 2)
