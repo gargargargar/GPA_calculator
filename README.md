@@ -1,4 +1,4 @@
-# GPA_calculator
+# GPA_calculator (THIS PROJECT IS INCOMPLETE. PLEASE COME BACK SOON.)
 This is a tiny project created by Garcia (Hung-Wei) Lu (who, coincidentally, happens to me) to resolve a common high school student's and potentially college student's problem: calculating your GPA.
 
 If you're a random Internet lurker without knowledge of how to utilize/execute/run this at all, no fear! I'll be explaining the instructions below in as much detail as possible.
