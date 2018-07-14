@@ -8,6 +8,7 @@ import csv
 from pathlib import Path
 
 
+#TODO CASE INSENSITIVE COMPARE
 GPA_standard = {"A+": 12/3, "A": 12/3, "A-": 11/3,
 				"B+": 10/3, "B": 9/3, "B-": 8/3,
 				"C+": 7/3, "C": 6/3, "C-": 5/3,
@@ -32,9 +33,9 @@ def boost_dict_init(boost_filename = ""):
 			boost_type_col = 0 #Type of course, e.g. AP, honors
 			boost_col = 1
 			for index in range(len(boost_header)):
-				if (boost_header[index] == "type"):
+				if (boost_header[index].lower() == "type"):
 					boost_type_col = index
-				elif (boost_header[index] == "boost"):
+				elif (boost_header[index].lower() == "boost"):
 					boost_col = index
 
 			for entry in boost_reader:
@@ -47,7 +48,7 @@ def boost_dict_init(boost_filename = ""):
 
 #Main calculating function
 def GPA_calculator(filename = "grade_testfile.csv", boost_filename = "boost_testfile.csv", grade_boost = {},
-				   maximum_unweighted_GPA = 4.000, decimal = 2, entrytype = "letter"):
+				   maximum_unweighted_GPA = 4.000, decimal = 3, entrytype = "letter"):
 
 	weighted_GPA_sum = 0.0
 	unweighted_GPA_sum = 0.0
@@ -73,7 +74,7 @@ def GPA_calculator(filename = "grade_testfile.csv", boost_filename = "boost_test
 
 
 			#Letter grade to numerical grade conversion
-			if (entrytype == "letter"):
+			if (entrytype.lower() == "letter"):
 				GPA_dict = GPA_standard.copy()
 				GPA_dict["A+"] = maximum_unweighted_GPA
 
@@ -90,11 +91,11 @@ def GPA_calculator(filename = "grade_testfile.csv", boost_filename = "boost_test
 			credit_col = 1
 			type_col = 2 #Type of course, e.g. AP, honors
 			for index in range(len(header)):
-				if (header[index] == "grade"):
+				if (header[index].lower() == "grade"):
 					grade_col = index
-				elif (header[index] == "credit"):
+				elif (header[index].lower() == "credit"):
 					credit_col = index
-				elif(header[index] == "type"):
+				elif(header[index].lower() == "type"):
 					type_col = index
 
 
@@ -107,11 +108,11 @@ def GPA_calculator(filename = "grade_testfile.csv", boost_filename = "boost_test
 
 				credit_count += credit
 
-				if (entrytype == "letter"):
+				if (entrytype.lower() == "letter"):
 					unweighted_GPA_sum += (GPA_dict[grade] * credit)
 					weighted_GPA_sum += (GPA_dict[grade] * credit)
 					
-				elif(entrytype == "gpa"):
+				elif(entrytype.lower() == "gpa"):
 					#TODO: EXCEPTION HANDLING
 					grade = float(grade)
 					unweighted_GPA_sum += (grade * credit)
@@ -122,6 +123,8 @@ def GPA_calculator(filename = "grade_testfile.csv", boost_filename = "boost_test
 				if (entry[type_col] in boost_dict):
 					weighted_GPA_sum += (boost_dict[course_type] * credit)
 					maximum_weighted_GPA_sum += ((maximum_unweighted_GPA + boost_dict[course_type]) * credit)
+				else:
+					maximum_weighted_GPA_sum += (maximum_unweighted_GPA * credit)
 
 
 			#Final GPA Calculation
@@ -135,6 +138,7 @@ def GPA_calculator(filename = "grade_testfile.csv", boost_filename = "boost_test
 
 	except FileNotFoundError:
 		print("File {} does not exist! Program aborted.".format(args.filename))
+		exit()
 
 
 	
@@ -145,11 +149,13 @@ if __name__ == "__main__":
 
 	#Parsing relevant parameters
 	parser = argparse.ArgumentParser()
-	parser.add_argument("--filename", type = str, default = b)
+	parser.add_argument("--filename", type = str, default = "grade_testfile.csv")
 	parser.add_argument("--boost_filename", type = str, default = "boost_testfile.csv")
 	parser.add_argument("--maximum", type = float, default = 4.000)
-	parser.add_argument("--decimal", type = int, default = 2)
+	parser.add_argument("--decimal", type = int, default = 3)
 	parser.add_argument("--entrytype", type = str, default = "letter")
+	#TODO: Auto detect letter or explicit
+	#TODO: Does explicit already take weighted in account?
 
 	args = parser.parse_args()
 
@@ -158,7 +164,7 @@ if __name__ == "__main__":
 	print("File name: {}".format(args.filename))
 	print("Boost File name: {}".format(args.boost_filename))
 	print("Maximum Unweighted GPA: {}".format(args.maximum))
-	print("Entry Type: {}".format("Letter Grade" if args.entrytype == "letter" else "Explicit GPA"))
+	print("Entry Type: {}".format("Letter Grade" if args.entrytype.lower() == "letter" else "Explicit GPA"))
 	print()
 
 
@@ -168,8 +174,9 @@ if __name__ == "__main__":
 																		entrytype = args.entrytype)
 
 
-	print(("Uneighted GPA: {0:." + str(args.decimal) + "f}/{0:." + str(args.decimal) + "f}").format(unweighted_GPA, args.maximum))
-	print(("Weighted GPA: {0:." + str(args.decimal) + "f}/{0:." + str(args.decimal) + "f}").format(weighted_GPA, args.maximum))
+	print(("Unweighted GPA: {:." + str(args.decimal) + "f} out of {:." + str(args.decimal) + "f}").format(unweighted_GPA, args.maximum))
+	print(("Weighted GPA: {:." + str(args.decimal) + "f} out of {:." + str(args.decimal) + "f}").format(weighted_GPA, maximum_weighted_GPA))
+
 
 	
 
