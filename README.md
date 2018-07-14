@@ -37,7 +37,7 @@ If any option marked "OPTIONAL" does not apply to you, simply leave out the argu
 ### Creating CSV Files
 There is one required csv files and one optional csv file.
 
-The following csv file examples CAN BE EDITED WITH MICROSOFT EXCEL or GOOGLE SHEETS
+The following csv file examples CAN BE EDITED WITH MICROSOFT EXCEL or GOOGLE SHEETS.
 
 Please download [grade_testfile.csv](https://github.com/gargargargar/GPA_calculator/blob/master/grade_testfile.csv) for an example of the `--filename FILENAME` argument. Feel free to edit the downloaded copy directly. Using this file as an example, your command line execution would look like
 ```
