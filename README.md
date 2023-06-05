@@ -4,7 +4,7 @@ This is a tiny project created by Garcia (Hung-Wei) Lu (who, coincidentally, hap
 If you're a random Internet lurker without knowledge of how to utilize/execute/run this at all, no fear! I'll be explaining the instructions below in as much detail as possible.
 
 ## Executing the Program
-Feel free to download the [python code](https://github.com/gargargargar/GPA_calculator/blob/master/GPA_calculator.py) for your own use. (Doubt this is worth any business value, but if that's legitimately what you're thinking, go find a better version of this. Seriously.)
+Feel free to download the [python code](https://github.com/gargargargar/GPA_calculator/blob/master/GPA_calculator.py) for your own use.
 
 The command line command for executing the program is as follows:
 ```
